@@ -36,13 +36,35 @@ import numpy as np
 import pandas as pd
 from pandas import Series, DataFrame
 
+# loading a comma delimited file
+
+df = pd.read_csv("examples/ex1.csv")
+
+df
+
+# reading a file without a header
+
+pd.read_csv("examples/ex2.csv", header=None)
+
+
+# specifying the header separately
+
+pd.read_csv("examples/ex2.csv", names=["a", "b", "c", "d", "message"])
+
+
+
+# Making the mesage column the indexed column
+
+
+names = ["a", "b", "c", "d", "message"]
+
+names
+
+
+
 
 # Reading text files in pieces
 # ----------------------------
-
-
-
-
 
 
 # Writing data to text format
