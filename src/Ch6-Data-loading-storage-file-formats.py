@@ -15,7 +15,6 @@
 # ----------------------------------------------------
 
 # pandas.read_csv most frequently used method
-
 # Text and binary data loading functions in pandas
 # read_csv, read_fwf, read_clipboard, read_excel
 # read_hdf, read_html, read_json, read_feather,
@@ -131,18 +130,79 @@ pd.isna(result3)
 
 # Different NA sentinels can be spedified for each column in a dictionary"
 
+sentinels = {"message":["foo", "NA"], "something":["two"]}
 
+sentinels
 
+pd.read_csv("examples/ex5.csv")
 
+pd.read_csv("examples/ex5.csv", na_values=sentinels, keep_default_na=False)
 
+# Some pandas.rad_csv function arguments
+# path, sep or delimiter, header, index_col, names, skiprows, na_values
+# keep_default_na, comment, parse_dates, keep_date_col, converters
+# dayfirst, date_parser, nrows, itnerator, chunksize, skip_footer
+# verbose, encoding, squeeze, thousandes, decimal, engine
 
 
 # Reading text files in pieces
 # ----------------------------
 
+# For large files, may want to just read first few lines
+# or interate through smaller chunks of a file
+
+pd.options.display.max_rows = 10
+
+result = pd.read_csv("examples/ex6.csv")
+
+result
+
+# reading a small number of rows
+
+result = pd.read_csv("examples/ex6.csv", nrows=5)
+
+result
+
+# read a file in pieces  using chunksize
+
+chunker = pd.read_csv("examples/ex6.csv", chunksize=1000)
+
+type(chunker)
+
+# TextFileReader object allows you to interate
+# parts of the file according to chunksize
+
+
+tot = pd.Series([], dtype='int64')
+
+for piece in chunker:
+    tot = tot.add(piece["key"].value_counts(), fill_value=0)
+    
+tot = tot.sort_values(ascending=False)
+
+tot[:10]
+
+# TextFileReader also has get_chunk method to read variable size chunks
+
 
 # Writing data to text format
 # ---------------------------
+
+data = pd.read_csv("examples/ex5.csv")
+
+data
+
+# Using DataFrame's to_csv method
+
+data.to_csv("examples/out.csv")
+
+
+
+
+
+
+
+
 
 
 # Working with other delimited formsts
